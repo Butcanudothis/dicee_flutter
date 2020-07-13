@@ -6,12 +6,31 @@ void main() {
   return runApp(
     MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.deepOrangeAccent,
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Center(child: Text('Dicee')),
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(colors: [
+                Colors.blue,
+                Colors.lightBlue,
+              ], begin: Alignment.bottomCenter, end: Alignment.topCenter),
+            ),
+          ),
+          elevation: 0.0,
         ),
-        body: DicePage(),
+        body: Container(
+          child: DicePage(),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [
+              Colors.blue,
+              Colors.lightBlue,
+              Colors.lightBlueAccent,
+              Colors.lightBlueAccent
+            ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+          ),
+        ),
       ),
     ),
   );
@@ -25,6 +44,12 @@ class DicePage extends StatefulWidget {
 class _DicePageState extends State<DicePage> {
   int leftdicenumber = 6;
   int rightdicenumber = 6;
+  void RandomDiceNumber() {
+    setState(() {
+      leftdicenumber = Random().nextInt(6) + 1;
+      rightdicenumber = Random().nextInt(6) + 1;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +59,7 @@ class _DicePageState extends State<DicePage> {
           Expanded(
             child: FlatButton(
               onPressed: () {
-                setState(() {
-                  leftdicenumber = Random().nextInt(6) + 1;
-                });
+                RandomDiceNumber();
               },
               child: Image.asset('images/dice$leftdicenumber.png'),
             ),
@@ -45,7 +68,7 @@ class _DicePageState extends State<DicePage> {
             child: FlatButton(
                 onPressed: () {
                   setState(() {
-                    rightdicenumber = Random().nextInt(6) + 1;
+                    RandomDiceNumber();
                   });
                 },
                 child: Image.asset('images/dice$rightdicenumber.png')),
